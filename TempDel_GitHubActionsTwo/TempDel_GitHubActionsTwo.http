@@ -1,0 +1,6 @@
+@TempDel_GitHubActionsTwo_HostAddress = http://localhost:5075
+
+GET {{TempDel_GitHubActionsTwo_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
