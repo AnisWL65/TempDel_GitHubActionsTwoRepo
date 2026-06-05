@@ -1,0 +1,36 @@
+name: .NET Core CI
+
+# 1. Trigger the workflow on push or PR to main branch
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  build-and-test:
+    # 2. Choose the virtual machine environment
+    runs-on: ubuntu-latest
+
+    steps:
+    # 3. Check out your repository code onto the runner
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    # 4. Set up the .NET SDK on the runner
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 9.0.x
+
+    # 5. Restore NuGet dependencies
+    - name: Restore dependencies
+      run: dotnet restore
+
+    # 6. Build the project
+    - name: Build
+      run: dotnet build --no-restore --configuration Release
+
+    # 7. Run unit tests (Fixed: Added --configuration Release)
+    - name: Test
+      run: dotnet test --no-build --configuration Release --verbosity normal
